@@ -58,7 +58,7 @@ const getRandomImageDescription = () => {
 
   return {
     id: getRandomIntFromRange(1, IMAGE_NUMBER),
-    url: 'photos/' + getRandomIntFromRange(1, IMAGE_NUMBER) + '.jpg',
+    url: '../photos/' + getRandomIntFromRange(1, IMAGE_NUMBER) + '.jpg',
     description: 'Описание фотографии' + getRandomIntFromRange(1, IMAGE_NUMBER),
     likes: getRandomIntFromRange(15, 200),
     comments: getComments(),
