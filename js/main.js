@@ -1,3 +1,4 @@
-import {imageArray} from './data-generator.js';
-import './global-variables.js';
-import './utilities.js';
+import {renderImages} from './image-renderer.js';
+import {IMAGE_NUMBER} from './global-variables.js';
+
+renderImages(IMAGE_NUMBER);

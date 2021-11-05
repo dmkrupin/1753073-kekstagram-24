@@ -40,4 +40,5 @@ const getRandomImageDescription = () => {
 };
 
 // Генерируем массив фотографий
-export const imageArray = Array.from({length: IMAGE_NUMBER}, getRandomImageDescription);
+const generateImages = () => Array.from({length: IMAGE_NUMBER}, getRandomImageDescription);
+export {generateImages};
