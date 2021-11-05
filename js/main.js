@@ -1,5 +1,5 @@
 import {generateImages} from './data-generator.js';
-import {renderImages} from './image-renderer';
+import {renderImages} from './image-renderer.js';
 import { IMAGE_NUMBER } from './global-variables.js';
 
 //генерируем массив фотографий;

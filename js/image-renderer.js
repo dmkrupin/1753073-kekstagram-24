@@ -1,4 +1,4 @@
-import { randomImages } from './main';
+import { randomImages } from './main.js';
 
 const pictureTemplate = document.querySelector('.pictures');
 /**
