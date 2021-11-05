@@ -1,8 +1,6 @@
-import {generateImages} from './data-generator.js';
+import { randomImages } from './main';
 
-const randomImages = generateImages();
 const pictureTemplate = document.querySelector('.pictures');
-
 /**
  * Функция создает в разметке фотографию с параметрами входящего объекта
  * @param {object} incomingImage - объект фотографии, по значениям ключей которого создаем теги в разметке
@@ -40,8 +38,10 @@ const renderImage = function (incomingImage) {
 /**
  * Функция добавляет в разметку заданное количество фотографий
  */
-export const renderImages = (imageNumber) => {
+const renderImages = (imageNumber) => {
   for (let i = 0; i < imageNumber; i++)  {
     renderImage(randomImages[i]);
   }
 };
+
+export { renderImages };
