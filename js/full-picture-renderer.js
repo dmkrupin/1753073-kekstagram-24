@@ -12,9 +12,13 @@ const fullPhotoCommentsSummary = fullPhotoFrame.querySelector('.social__comment-
 const fullPhotoCommentsLoader = fullPhotoFrame.querySelector('.comments-loader');
 
 const clearComments = () => {
-  for (const comment of fullPhotoComments.children) {
-    comment.remove();
-  }
+  const existingComments = fullPhotoComments.children;
+  //Почему это не работает?
+  // console.log(existingComments);
+  // for (const comment of existingComments) {
+  //   comment.remove();
+  // }
+  // console.log(existingComments);
 };
 
 const renderComment = (comment) => {
@@ -43,7 +47,6 @@ const renderComments = (photo) => {
   });
 };
 
-
 const setFullPhotoParameters = (photo) => {
   console.log(photo);
   fullPhotoImage.src = photo.url;
@@ -54,7 +57,7 @@ const setFullPhotoParameters = (photo) => {
   fullPhotoLikesCount.textContent = photo.likes;
   fullPhotoCommentsCount.textContent = photo.comments.length;
   clearComments();
-  renderComments(photo);
+  // renderComments(photo);
 
   fullPhotoCommentsSummary.classList.add('hidden');
   fullPhotoCommentsLoader.classList.add('hidden');
