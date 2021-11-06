@@ -20,8 +20,8 @@ const getRandomImageDescription = () => {
   const getRandomComment = () => {
     return {
       id: getRandomIntFromRange(1, 999),
-      avatar: `../img/avatar- ${getRandomIntFromRange(1, 6)}.svg`,
-      message: [getRandomArrayElement(COMMENT_ARRAY), getRandomArrayElement(COMMENT_ARRAY)],
+      avatar: `img/avatar-${getRandomIntFromRange(1, 6)}.svg`,
+      message: getRandomArrayElement(COMMENT_ARRAY),
       name: getRandomArrayElement(COMMENTATOR_NAME_ARRAY),
     };
   };
@@ -32,7 +32,7 @@ const getRandomImageDescription = () => {
 
   return {
     id: getRandomIntFromRange(1, IMAGE_NUMBER),
-    url: `../photos/${getRandomIntFromRange(1, IMAGE_NUMBER)}.jpg`,
+    url: `photos/${getRandomIntFromRange(1, IMAGE_NUMBER)}.jpg`,
     description: `Описание фотографии${getRandomIntFromRange(1, IMAGE_NUMBER)}`,
     likes: getRandomIntFromRange(15, 200),
     comments: getComments(),

@@ -1,7 +1,8 @@
 import {generateImages} from './data-generator.js';
+import { photoClickHandler } from './full-picture-renderer.js';
 
-const randomImages = generateImages();
-const pictureTemplate = document.querySelector('.pictures');
+export const randomImages = generateImages();
+export const pictureSpace = document.querySelector('.pictures');
 
 /**
  * Функция создает в разметке фотографию с параметрами входящего объекта
@@ -34,14 +35,19 @@ const renderImage = function (incomingImage) {
   imageLikes.textContent = incomingImage.likes;
   imageInfo.appendChild(imageLikes);
 
-  pictureTemplate.appendChild(imageLink);
+  pictureSpace.appendChild(imageLink);
+
+  //Открываем полноразмерную фотографию по клику
+  photoClickHandler(imageLink, incomingImage);
 };
 
 /**
  * Функция добавляет в разметку заданное количество фотографий
  */
-export const renderImages = (imageNumber) => {
+const renderImages = (imageNumber) => {
   for (let i = 0; i < imageNumber; i++)  {
     renderImage(randomImages[i]);
   }
 };
+
+export { renderImages };
