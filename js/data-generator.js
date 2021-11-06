@@ -20,8 +20,13 @@ const getRandomImageDescription = () => {
   const getRandomComment = () => {
     return {
       id: getRandomIntFromRange(1, 999),
+<<<<<<< HEAD
       avatar: `img/avatar- ${getRandomIntFromRange(1, 6)}.svg`,
       message: [getRandomArrayElement(COMMENT_ARRAY), getRandomArrayElement(COMMENT_ARRAY)],
+=======
+      avatar: `img/avatar-${getRandomIntFromRange(1, 6)}.svg`,
+      message: getRandomArrayElement(COMMENT_ARRAY),
+>>>>>>> 5bddcae (Собрал модуль рендера полной фотографии)
       name: getRandomArrayElement(COMMENTATOR_NAME_ARRAY),
     };
   };

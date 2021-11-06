@@ -1,6 +1,15 @@
+<<<<<<< HEAD
 import { randomImages } from './main.js';
 
 const pictureTemplate = document.querySelector('.pictures');
+=======
+import {generateImages} from './data-generator.js';
+import { photoClickHandler } from './full-picture-renderer.js';
+
+export const randomImages = generateImages();
+export const pictureSpace = document.querySelector('.pictures');
+
+>>>>>>> 5bddcae (Собрал модуль рендера полной фотографии)
 /**
  * Функция создает в разметке фотографию с параметрами входящего объекта
  * @param {object} incomingImage - объект фотографии, по значениям ключей которого создаем теги в разметке
@@ -32,7 +41,10 @@ const renderImage = function (incomingImage) {
   imageLikes.textContent = incomingImage.likes;
   imageInfo.appendChild(imageLikes);
 
-  pictureTemplate.appendChild(imageLink);
+  pictureSpace.appendChild(imageLink);
+
+  //Открываем полноразмерную фотографию по клику
+  photoClickHandler(imageLink, incomingImage);
 };
 
 /**

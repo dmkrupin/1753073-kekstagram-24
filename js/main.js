@@ -7,3 +7,4 @@ export const randomImages = generateImages();
 
 //отрисовываем фотографии в разметке;
 renderImages(IMAGE_NUMBER);
+
