@@ -1,3 +1,4 @@
+const body = document.querySelector('body');
 const fullPhotoFrame = document.querySelector('.big-picture');
 const fullPhotoCloseButton = fullPhotoFrame.querySelector('.big-picture__cancel');
 const fullPhotoImageContainer = fullPhotoFrame.querySelector('.big-picture__img');
@@ -6,6 +7,9 @@ const fullPhotoDescription = fullPhotoFrame.querySelector('.social__caption');
 const fullPhotoLikesCount = fullPhotoFrame.querySelector('.likes-count');
 const fullPhotoCommentsCount = fullPhotoFrame.querySelector('.comments-count');
 const fullPhotoComments = fullPhotoFrame.querySelector('.social__comments');
+
+const fullPhotoCommentsSummary = fullPhotoFrame.querySelector('.social__comment-count');
+const fullPhotoCommentsLoader = fullPhotoFrame.querySelector('.comments-loader');
 
 const clearComments = () => {
   for (const comment of fullPhotoComments.children) {
@@ -20,7 +24,7 @@ const renderComment = (comment) => {
   const commentElementAvatar = document.createElement('img');
   commentElementAvatar.classList.add('social__picture');
   commentElementAvatar.src = comment.avatar;
-  commentElementAvatar.alt = 'Аватар комментатора фотографии';
+  commentElementAvatar.alt = comment.name;
   commentElementAvatar.width = 35;
   commentElementAvatar.height = 35;
   commentElement.appendChild(commentElementAvatar);
@@ -51,6 +55,9 @@ const setFullPhotoParameters = (photo) => {
   fullPhotoCommentsCount.textContent = photo.comments.length;
   clearComments();
   renderComments(photo);
+
+  fullPhotoCommentsSummary.classList.add('hidden');
+  fullPhotoCommentsLoader.classList.add('hidden');
 };
 
 const photoClickHandler = (item, itemObject) => {
@@ -60,10 +67,12 @@ const photoClickHandler = (item, itemObject) => {
     setFullPhotoParameters(itemObject);
     //Показываем фрейм с полноразмерной фото
     fullPhotoFrame.classList.remove('hidden');
+    body.classList.add('modal-open');
     //Закрываем полноразмерную фотографию по клику на крестик
     fullPhotoCloseButton.addEventListener('click', (event) => {
       event.preventDefault();
       fullPhotoFrame.classList.add('hidden');
+      body.classList.remove('modal-open');
     });
   });
 };
