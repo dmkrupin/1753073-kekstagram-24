@@ -1,4 +1,4 @@
-import {generateImages} from './data-generator.js';
+import {generateImages} from './mocks/photo-generator.js';
 import { photoClickHandler } from './full-picture-renderer.js';
 
 export const randomImages = generateImages();
