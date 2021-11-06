@@ -74,6 +74,15 @@ const photoClickHandler = (item, itemObject) => {
       fullPhotoFrame.classList.add('hidden');
       body.classList.remove('modal-open');
     });
+    //Закрываем полноразмерную фотографию также и по нажатию Esc
+    document.addEventListener('keydown', (event) => {
+      event.preventDefault();
+      if (event.keyCode === 27) {
+        fullPhotoFrame.classList.add('hidden');
+        body.classList.remove('modal-open');
+      }
+    });
+
   });
 };
 
