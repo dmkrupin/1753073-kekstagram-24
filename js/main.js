@@ -1,10 +1,10 @@
 import { generatePhotos } from './mocks/photo-generator.js';
-import { renderImages } from './image-renderer.js';
-import { IMAGE_NUMBER } from './global-variables.js';
+import { renderPreviewPhotos } from './preview-photo-renderer.js';
+import { PHOTO_NUMBER } from './global-variables.js';
 
 //Генерируем массив фотографий;
-const photosDataset = generatePhotos();
+const photosDataset = generatePhotos(PHOTO_NUMBER);
 
 //Отрисовываем превью фотографий в разметке;
-renderImages(IMAGE_NUMBER, photosDataset);
+renderPreviewPhotos(photosDataset);
 
