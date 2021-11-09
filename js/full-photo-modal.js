@@ -1,8 +1,7 @@
 import { COMMENT_AVATAR_SIZE } from './global-variables.js';
 import { FULL_PHOTO_IMAGE_SIZE } from './global-variables.js';
-import { isEscapeKey } from './common.js';
+import { body, isEscapeKey } from './common.js';
 
-const body = document.querySelector('body');
 const fullPhotoFrame = document.querySelector('.big-picture');
 const fullPhotoCloseButton = fullPhotoFrame.querySelector('.big-picture__cancel');
 const fullPhotoImageContainer = fullPhotoFrame.querySelector('.big-picture__img');
@@ -72,7 +71,7 @@ function closeModalFullPhoto () {
   //Удаляем обработчик нажатия Esc
   document.removeEventListener('keydown', onFullPhotoEscKeydown);
   //Удаляем обработчик клика по кнопке закрытия полноразмерной фото
-  fullPhotoCloseButton.removeEventListener('keydown', onFullPhotoCloseButtonClick);
+  fullPhotoCloseButton.removeEventListener('click', onFullPhotoCloseButtonClick);
 }
 //Рендерим полноразмерную фотографию
 const buildFullPhoto = ({url, description, likes, comments}) => {
