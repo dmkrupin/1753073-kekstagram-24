@@ -1,4 +1,4 @@
-import { previewPhotoClickHandler } from './full-photo-renderer.js';
+import { previewPhotoClickHandler } from './full-photo-modal.js';
 import { PREVIEW_PHOTO_SIZE } from './global-variables.js';
 
 export const previewPhotoSpace = document.querySelector('.pictures');
