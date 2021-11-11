@@ -3,6 +3,7 @@ export const PREVIEW_PHOTO_SIZE = 182;
 export const COMMENT_AVATAR_SIZE = 35;
 export const FULL_PHOTO_IMAGE_SIZE = 600;
 export const ESCAPE_KEYCODE = 27;
+export const MAX_HASHTAGS_ALLOWED = 5;
 
 export const COMMENT_ARRAY = [
   'Всё отлично!',
