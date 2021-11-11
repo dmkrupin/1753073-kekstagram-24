@@ -1,20 +1,26 @@
 import { body, isEscapeKey, isUniqueArray } from './common.js';
-import { MAX_HASHTAGS_ALLOWED } from './global-variables.js';
+import { MAX_HASHTAGS_ALLOWED, MAX_DESCRIPTION_LENGTH } from './global-variables.js';
 
 const uploadPhotoInput = document.querySelector('.img-upload__input');
 const hashtagsInput = document.querySelector('.text__hashtags');
+const descriptionInput = document.querySelector('.text__description');
 const uploadOverlayFrame = document.querySelector('.img-upload__overlay');
 const uploadOverlayCloseButton = uploadOverlayFrame.querySelector('.img-upload__cancel');
 
 //Очищаем все поля формы
 //
 //
-
 //Обработчик нажатия Esc на окне редактирования загруженного фото
 const onUploadOverlayEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    closeModalUploadOverlay();
+    //Если при нажатии Esc активно текстовое поле, то запретим всплытие события (почему не evt.target?? не понял как это работает)
+    if (document.activeElement === hashtagsInput || document.activeElement === descriptionInput) {
+      evt.stopPropagation();
+    }
+    else {
+      closeModalUploadOverlay();
+    }
   }
 };
 //Обработчик клика по кнопке закрытия в окне редактирования загруженного фото
@@ -47,6 +53,17 @@ const onHashTagInputInput = () => {
   }
   hashtagsInput.reportValidity();
 };
+//Обработчик-валидатор поля ввода описания
+const onDescriptionInputInput = () => {
+  const input = descriptionInput.value;
+  if (input.length > MAX_DESCRIPTION_LENGTH) {
+    descriptionInput.setCustomValidity(`Максимальная длина описания - ${MAX_DESCRIPTION_LENGTH} символов`);
+  }
+  else {
+    descriptionInput.setCustomValidity('');
+  }
+  descriptionInput.reportValidity();
+};
 //Скрываем фрейм с формой редактирования загруженного фото
 function closeModalUploadOverlay () {
   uploadOverlayFrame.classList.add('hidden');
@@ -71,6 +88,9 @@ function openModalUploadOverlay () {
   //Валидируем поле ввода хэштегов
   hashtagsInput.addEventListener('input', () => {
     onHashTagInputInput();
+  });
+  descriptionInput.addEventListener('input', () => {
+    onDescriptionInputInput();
   });
 }
 
