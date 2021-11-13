@@ -7,9 +7,6 @@ const descriptionInput = document.querySelector('.text__description');
 const uploadOverlayFrame = document.querySelector('.img-upload__overlay');
 const uploadOverlayCloseButton = uploadOverlayFrame.querySelector('.img-upload__cancel');
 
-//Очищаем все поля формы
-//
-//
 //Обработчик нажатия Esc на окне редактирования загруженного фото
 const onUploadOverlayEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -72,10 +69,12 @@ function closeModalUploadOverlay () {
   document.removeEventListener('keydown', onUploadOverlayEscKeydown);
   //Удаляем обработчик клика по кнопке закрытия полноразмерной фото
   uploadOverlayCloseButton.removeEventListener('click', onUploadOverlayCloseButtonClick);
-  //Очищаем поле загрузки изображения И ВСЕ ОСТАЛЬНЫЕ ПОЛЯ ФОРМЫ (надо дописать сюда функцию)
+  //Очищаем поле загрузки изображения и все остальные поля
   uploadPhotoInput.value = '';
   hashtagsInput.removeEventListener('input', onHashTagInputInput);
   hashtagsInput.value = '';
+  descriptionInput.removeEventListener('input', onDescriptionInputInput);
+  descriptionInput.value='';
 }
 //Показываем фрейм с формой редактирования загруженного фото
 function openModalUploadOverlay () {

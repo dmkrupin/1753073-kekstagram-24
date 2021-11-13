@@ -1,6 +1,6 @@
 import { COMMENT_AVATAR_SIZE } from './global-variables.js';
-import { FULL_PHOTO_IMAGE_SIZE } from './global-variables.js';
-import { body, isEscapeKey } from './common.js';
+import { FULL_PHOTO_IMAGE_SIZE, COMMENTS_PORTION_PER_LOAD } from './global-variables.js';
+import { body, isEscapeKey, numberAsStringIncrement } from './common.js';
 
 const fullPhotoFrame = document.querySelector('.big-picture');
 const fullPhotoCloseButton = fullPhotoFrame.querySelector('.big-picture__cancel');
@@ -8,15 +8,17 @@ const fullPhotoImageContainer = fullPhotoFrame.querySelector('.big-picture__img'
 const fullPhotoImage = fullPhotoImageContainer.querySelector('img');
 const fullPhotoDescription = fullPhotoFrame.querySelector('.social__caption');
 const fullPhotoLikesCount = fullPhotoFrame.querySelector('.likes-count');
-const fullPhotoCommentsCount = fullPhotoFrame.querySelector('.comments-count');
 const fullPhotoComments = fullPhotoFrame.querySelector('.social__comments');
 const fullPhotoExistingComments = fullPhotoComments.children;
-const fullPhotoCommentsSummary = fullPhotoFrame.querySelector('.social__comment-count');
-const fullPhotoCommentsLoader = fullPhotoFrame.querySelector('.comments-loader');
+const fullPhotoDisplayedCommentsCount = fullPhotoFrame.querySelector('.displayed-comments-count');
+const fullPhotoCommentsTotal = fullPhotoFrame.querySelector('.comments-count');
+let fullPhotoCommentsLoader = fullPhotoFrame.querySelector('.comments-loader');
+let commentsPortionsLoaded = 0;
 
-//Функция удаляет все срендеренные комментарии к полноразмерной фотографии
+//Функция удаляет все срендеренные комментарии к полноразмерной фотографии и обнуляет счетчик
 const clearComments = () => {
   [...fullPhotoExistingComments].forEach((comment) => comment.remove());
+  fullPhotoDisplayedCommentsCount.textContent = '0';
 };
 //Рендерим комментарий к полноразмерной фотографии из датасета
 const renderComment = (comment) => {
@@ -38,10 +40,24 @@ const renderComment = (comment) => {
   commentElement.appendChild(commentElementText);
   //Добавляем полученный комментарий к остальным
   fullPhotoComments.appendChild(commentElement);
+  //Увеличиваем счетчик отображаемых комментариев на 1
+  fullPhotoDisplayedCommentsCount.textContent = numberAsStringIncrement(fullPhotoDisplayedCommentsCount.textContent);
 };
-//Геренируем все комментарии из соответствующего массива к полноразмерной фотографии
-const renderComments = (commentsArray) => {
-  commentsArray.forEach((comment) => renderComment(comment));
+/** Генерируем порцию комментариев из соответствующего массива к полноразмерной фотографии
+ * Выбираем индексы порций по 5 комментариев из массива последовательно:
+ * 0-4 = 5*0 - 5*(0+1)
+ * 5-9 = 5*1 - 5*(1+1)
+ * 10-14 = 5*2 - 5*(2+1)
+ * 15-19 = 5*3 - 5*(3+1)
+ * , где 5 - количество комментариев в порции, 0,1,2,3,.. - счетчик загрузок порций
+*/
+const renderCommentsPortion = (commentsArray) => {
+  const commentsPortion = commentsArray.slice(COMMENTS_PORTION_PER_LOAD * commentsPortionsLoaded, COMMENTS_PORTION_PER_LOAD * (1 + commentsPortionsLoaded));
+  commentsPortion.forEach((comment) => renderComment(comment));
+  commentsPortionsLoaded++;
+  if (parseInt(fullPhotoDisplayedCommentsCount.textContent, 10) === commentsArray.length) {
+    fullPhotoCommentsLoader.classList.add('hidden');
+  }// если комментов изначально всего 5, то кнопка почему-то не пропадает
 };
 //Обработчик нажатия Esc на окне полноразмерной фото
 const onFullPhotoEscKeydown = (evt) => {
@@ -55,14 +71,24 @@ const onFullPhotoCloseButtonClick = (evt) => {
   evt.preventDefault();
   closeModalFullPhoto();
 };
+//Обработчик клика по кнопке загрузки комментариев
+const onFullPhotoCommentsLoaderClick = function (comments) {
+  renderCommentsPortion(comments);
+};
 //Показываем фрейм с полноразмерной фото
-function openModalFullPhoto () {
+function openModalFullPhoto ({comments}) {
   fullPhotoFrame.classList.remove('hidden');
   body.classList.add('modal-open');
   //Будем закрывать полноразмерную фотографию по нажатию Esc
   document.addEventListener('keydown', onFullPhotoEscKeydown);
   //Будем закрывать полноразмерную фотографию по клику на крестик
   fullPhotoCloseButton.addEventListener('click', onFullPhotoCloseButtonClick);
+  //Показываем кнопку "загрузить еще комментарии", если она была спрятана
+  if (fullPhotoCommentsLoader.classList.contains('hidden')) {
+    fullPhotoCommentsLoader.classList.remove('hidden');
+  }
+  //Будем слушать клик по кнопке "загрузить еще комментарии" Я НЕ ПОНИМАЮ, КАК РАБОТАЮТ ЗАМЫКАНИЯ
+  fullPhotoCommentsLoader.addEventListener('click', () => {onFullPhotoCommentsLoaderClick(comments);});
 }
 //Скрываем фрейм с полноразмерной фото
 function closeModalFullPhoto () {
@@ -72,6 +98,13 @@ function closeModalFullPhoto () {
   document.removeEventListener('keydown', onFullPhotoEscKeydown);
   //Удаляем обработчик клика по кнопке закрытия полноразмерной фото
   fullPhotoCloseButton.removeEventListener('click', onFullPhotoCloseButtonClick);
+  //Удаляем кнопку "загрузить еще комментарии" со всеми обработчиками и создаем заново
+  const swap = fullPhotoCommentsLoader.cloneNode(true);
+  fullPhotoCommentsLoader.remove();
+  fullPhotoCommentsLoader = swap;
+  fullPhotoComments.insertAdjacentElement('afterend', fullPhotoCommentsLoader);
+  //Обнуляем счетчик счетчик загруженных порций
+  commentsPortionsLoaded = 0;
 }
 //Рендерим полноразмерную фотографию
 const buildFullPhoto = ({url, description, likes, comments}) => {
@@ -81,19 +114,16 @@ const buildFullPhoto = ({url, description, likes, comments}) => {
   fullPhotoImage.height = FULL_PHOTO_IMAGE_SIZE;
   fullPhotoDescription.textContent = description;
   fullPhotoLikesCount.textContent = likes;
-  fullPhotoCommentsCount.textContent = comments.length;
+  fullPhotoCommentsTotal.textContent = comments.length;
   clearComments();
-  renderComments(comments);
-  //Прячем счетчик комментариев и загрузку новых
-  fullPhotoCommentsSummary.classList.add('hidden');
-  fullPhotoCommentsLoader.classList.add('hidden');
+  renderCommentsPortion(comments);
 };
 
 const previewPhotoClickHandler = (previewPhotoEvement, photoDataset) => {
   previewPhotoEvement.addEventListener('click', (evt) => {
     evt.preventDefault();
     buildFullPhoto(photoDataset);
-    openModalFullPhoto();
+    openModalFullPhoto(photoDataset);
   });
 };
 

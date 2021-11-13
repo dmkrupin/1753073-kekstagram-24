@@ -21,7 +21,7 @@ const createRandomComment = () => {
 /** Функция генерирует массив комментариев к фотографии
  * @returns {Array} - массив случайной длины от 1 до 3, где каждым элементом будет результат выполнения функции getRandomComment()
  */
-const createRandomComments = () => Array.from({length: getRandomIntFromRange(1, 3)}, createRandomComment);
+const createRandomComments = () => Array.from({length: getRandomIntFromRange(5, 15)}, createRandomComment);
 
 
 /** Функция генерирует случайную фотографию
