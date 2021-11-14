@@ -1,10 +1,11 @@
-import {generateImages} from './data-generator.js';
-import {renderImages} from './image-renderer.js';
-import { IMAGE_NUMBER } from './global-variables.js';
+import { generatePhotos } from './mocks/photo-generator.js';
+import { renderPreviewPhotos } from './preview-photo-renderer.js';
+import { PHOTO_NUMBER } from './global-variables.js';
+import './upload-photo-modal.js';
 
-//генерируем массив фотографий;
-export const randomImages = generateImages();
+//Генерируем массив фотографий;
+const photosDataset = generatePhotos(PHOTO_NUMBER);
 
-//отрисовываем фотографии в разметке;
-renderImages(IMAGE_NUMBER);
+//Отрисовываем превью фотографий в разметке;
+renderPreviewPhotos(photosDataset);
 
