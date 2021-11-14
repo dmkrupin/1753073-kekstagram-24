@@ -57,7 +57,7 @@ const renderCommentsPortion = (commentsArray) => {
   commentsPortionsLoaded++;
   if (parseInt(fullPhotoDisplayedCommentsCount.textContent, 10) === commentsArray.length) {
     fullPhotoCommentsLoader.classList.add('hidden');
-  }// если комментов изначально всего 5, то кнопка почему-то не пропадает
+  }
 };
 //Обработчик нажатия Esc на окне полноразмерной фото
 const onFullPhotoEscKeydown = (evt) => {
@@ -84,6 +84,7 @@ function openModalFullPhoto ({comments}) {
   //Будем закрывать полноразмерную фотографию по клику на крестик
   fullPhotoCloseButton.addEventListener('click', onFullPhotoCloseButtonClick);
   //Показываем кнопку "загрузить еще комментарии", если она была спрятана
+  // если комментов изначально всего 5, то кнопка не пропадает вот поэтому!
   if (fullPhotoCommentsLoader.classList.contains('hidden')) {
     fullPhotoCommentsLoader.classList.remove('hidden');
   }
