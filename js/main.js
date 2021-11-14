@@ -8,4 +8,3 @@ const photosDataset = generatePhotos(PHOTO_NUMBER);
 
 //Отрисовываем превью фотографий в разметке;
 renderPreviewPhotos(photosDataset);
-
