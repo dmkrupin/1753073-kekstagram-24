@@ -142,6 +142,7 @@ const onphotoFilterOptionChange = (evt) => {
 const setInitialEditorParameters = () => {
   //Задаем масштаб фото по умолчанию = 100%
   photoUserScaleField.value = '100%';
+  uploadedPhotoPreview.style.transform = 'scale(1)';
   //Вешаем слушатели событий на кнопки изменения масштаба
   photoScaleUpButton.addEventListener('click', onPhotoScaleUpButtonClick);
   photoScaleDownButton.addEventListener('click', onPhotoScaleDownButtonClick);
@@ -158,6 +159,7 @@ const setInitialEditorParameters = () => {
 const clearEditorParameters = () => {
   //Задаем масштаб фото по умолчанию = 100%
   photoUserScaleField.value = '100%';
+  uploadedPhotoPreview.style.transform = 'scale(1)';
   //Удаляем все слушатели с фрейма редактора
   photoScaleUpButton.removeEventListener('click', onPhotoScaleUpButtonClick);
   photoScaleDownButton.removeEventListener('click', onPhotoScaleDownButtonClick);
