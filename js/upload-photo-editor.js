@@ -20,7 +20,7 @@ const photoFilters = {
       max: 1,
     },
     step: 0.1,
-    start: 0,
+    start: 1,
   },
   sepia: {
     func: 'sepia',
@@ -30,7 +30,7 @@ const photoFilters = {
       max: 1,
     },
     step: 0.1,
-    start: 0,
+    start: 1,
   },
   marvin: {
     func: 'invert',
@@ -40,7 +40,7 @@ const photoFilters = {
       max: 100,
     },
     step: 1,
-    start: 0,
+    start: 100,
   },
   phobos: {
     func: 'blur',
@@ -50,7 +50,7 @@ const photoFilters = {
       max: 3,
     },
     step: 0.1,
-    start: 0,
+    start: 3,
   },
   heat: {
     func: 'brightness',
@@ -60,7 +60,7 @@ const photoFilters = {
       max: 3,
     },
     step: 0.1,
-    start: 1,
+    start: 3,
   },
 };
 let userFilterName = 'none';
