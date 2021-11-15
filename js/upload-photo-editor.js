@@ -1,5 +1,5 @@
 import { getPercentFromString, setPercentToString} from './common.js';
-import { UPLOADED_PHOTO_SCALE_STEP } from './global-variables.js';
+import { UPLOADED_PHOTO_SCALE_STEP, UPLOADED_PHOTO_MIN_SCALE } from './global-variables.js';
 import '../nouislider/nouislider.js';
 
 const photoScaleUpButton = document.querySelector('.scale__control--bigger');
@@ -7,6 +7,7 @@ const photoScaleDownButton = document.querySelector('.scale__control--smaller');
 const photoUserScaleField = document.querySelector('.scale__control--value');
 const userScaleHiddenField = document.querySelector('.user-scale-value');
 const uploadedPhotoPreview = document.querySelector('.img-upload__preview');
+const sliderContainer = document.querySelector('.img-upload__effect-level');
 const slider = document.querySelector('.effect-level__slider');
 const sliderValue = document.querySelector('.effect-level__value');
 const photoFilterOptions = document.querySelectorAll('.effects__radio');
@@ -89,8 +90,8 @@ const onPhotoScaleUpButtonClick = () => {
 const onPhotoScaleDownButtonClick = () => {
   let scaleValue = getPercentFromString(photoUserScaleField.value);
   scaleValue -= UPLOADED_PHOTO_SCALE_STEP;
-  if (scaleValue < 0) {
-    scaleValue = 0;
+  if (scaleValue < UPLOADED_PHOTO_MIN_SCALE) {
+    scaleValue = UPLOADED_PHOTO_MIN_SCALE;
   }
   uploadedPhotoPreview.style.transform = `scale(${scaleValue})`;
   userScaleHiddenField.value = scaleValue;
@@ -109,7 +110,7 @@ const onphotoFilterOptionChange = (evt) => {
     userFilterName = evt.target.value;
     if (userFilterName === 'none') {
       //Если выбран фильр "ничего", то прячем слайдер и возвращаем превью изначальный вид
-      slider.classList.add('hidden');
+      sliderContainer.classList.add('hidden');
       uploadedPhotoPreview.classList = 'img-upload__preview';
       uploadedPhotoPreview.style.filter = 'none';
       //Очищаем все обработчики со слайдера
@@ -117,7 +118,7 @@ const onphotoFilterOptionChange = (evt) => {
     }
     else {
       //Если выбран другой фильтр, то показываем слайдер
-      slider.classList.remove('hidden');
+      sliderContainer.classList.remove('hidden');
       //Очищаем все обработчики со слайдера
       slider.noUiSlider.off();
       //Вешаем на превью соответствующий модификатор ЗАЧЕМ?? ОН ЖЕ НИЧЕГО НЕ ДЕЛАЕТ, Я РАБОТАЮ С СТИЛЯМИ DOM УЗЛА НАПРЯМУЮ
@@ -149,7 +150,7 @@ const setInitialEditorParameters = () => {
   //Выбираем по умолчанию фильтр "Стандарт"
   photoFilterOptions[0].checked = true;
   //Прячем слайдер для фильтра "Стандарт"
-  slider.classList.add('hidden');
+  sliderContainer.classList.add('hidden');
   //Задаем картинке чистое состояние
   uploadedPhotoPreview.classList = 'img-upload__preview';
   //Вешаем слушатели выбора на фильтры
