@@ -1,5 +1,6 @@
 import { body, isEscapeKey, isUniqueArray } from './common.js';
 import { MAX_HASHTAGS_ALLOWED, MAX_DESCRIPTION_LENGTH } from './global-variables.js';
+import { setInitialEditorParameters, clearEditorParameters } from './upload-photo-editor.js';
 
 const uploadPhotoInput = document.querySelector('.img-upload__input');
 const hashtagsInput = document.querySelector('.text__hashtags');
@@ -75,6 +76,8 @@ function closeModalUploadOverlay () {
   hashtagsInput.value = '';
   descriptionInput.removeEventListener('input', onDescriptionInputInput);
   descriptionInput.value='';
+  //Очищаем редактор
+  clearEditorParameters();
 }
 //Показываем фрейм с формой редактирования загруженного фото
 function openModalUploadOverlay () {
@@ -91,6 +94,8 @@ function openModalUploadOverlay () {
   descriptionInput.addEventListener('input', () => {
     onDescriptionInputInput();
   });
+  //Готовим начальное состояние редактора
+  setInitialEditorParameters();
 }
 
 uploadPhotoInput.addEventListener('change', (evt) => {

@@ -6,6 +6,7 @@ export const COMMENTS_PORTION_PER_LOAD = 5;
 export const ESCAPE_KEYCODE = 27;
 export const MAX_HASHTAGS_ALLOWED = 5;
 export const MAX_DESCRIPTION_LENGTH = 140;
+export const UPLOADED_PHOTO_SCALE_STEP = 0.25;
 
 export const COMMENT_ARRAY = [
   'Всё отлично!',
