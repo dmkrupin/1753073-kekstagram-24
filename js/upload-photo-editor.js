@@ -5,6 +5,7 @@ const photoScaleUpButton = document.querySelector('.scale__control--bigger');
 const photoScaleDownButton = document.querySelector('.scale__control--smaller');
 const photoUserScaleField = document.querySelector('.scale__control--value');
 const userScaleHiddenField = document.querySelector('.user-scale-value');
+const uploadedPhotoPreview = document.querySelector('.img-upload__preview');
 
 //Обработчик клика по кнопке увеличения масштаба фотографии
 const onPhotoScaleUpButtonClick = () => {
@@ -13,6 +14,7 @@ const onPhotoScaleUpButtonClick = () => {
   if (scaleValue > 1) {
     scaleValue = 1;
   }
+  uploadedPhotoPreview.style.transform = `scale(${scaleValue})`;
   userScaleHiddenField.value = scaleValue;
   photoUserScaleField.value = setPercentToString(scaleValue);
 };
@@ -23,6 +25,7 @@ const onPhotoScaleDownButtonClick = () => {
   if (scaleValue < 0) {
     scaleValue = 0;
   }
+  uploadedPhotoPreview.style.transform = `scale(${scaleValue})`;
   userScaleHiddenField.value = scaleValue;
   photoUserScaleField.value = setPercentToString(scaleValue);
 };
