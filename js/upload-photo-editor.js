@@ -121,14 +121,11 @@ const onphotoFilterOptionChange = (evt) => {
       sliderContainer.classList.remove('hidden');
       //Очищаем все обработчики со слайдера
       slider.noUiSlider.off();
-      //Вешаем на превью соответствующий модификатор ЗАЧЕМ?? ОН ЖЕ НИЧЕГО НЕ ДЕЛАЕТ, Я РАБОТАЮ С СТИЛЯМИ DOM УЗЛА НАПРЯМУЮ
+      //Вешаем на превью соответствующий модификатор ЗАЧЕМ? ОН ЖЕ НИЧЕГО НЕ ДЕЛАЕТ, Я РАБОТАЮ СО СТИЛЯМИ DOM УЗЛА НАПРЯМУЮ
       uploadedPhotoPreview.classList = `img-upload__preview effects__preview--${userFilterName}`;
       //Обновляем параметры слайдера из карты значений для каждого фильтра
       slider.noUiSlider.updateOptions({
-        range: {
-          min: photoFilters[userFilterName].range.min,
-          max: photoFilters[userFilterName].range.max,
-        },
+        range: photoFilters[userFilterName].range,
         step: photoFilters[userFilterName].step,
       });
       //Задаем начальное значение ползунку слайдера
