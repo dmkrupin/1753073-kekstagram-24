@@ -643,6 +643,10 @@ main {
   outline: auto 5px highlight;
 }
 
+.effects__preview--none {
+  -webkit-filter: none;
+          filter: none;
+}
 .effects__preview--chrome {
   -webkit-filter: grayscale(1);
           filter: grayscale(1);
