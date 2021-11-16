@@ -1,5 +1,5 @@
 import { getPercentFromString, setPercentToString} from './common.js';
-import { UPLOADED_PHOTO_SCALE_STEP, UPLOADED_PHOTO_MIN_SCALE } from './global-variables.js';
+import { UPLOADED_PHOTO_SCALE_STEP, UPLOADED_PHOTO_MIN_SCALE, UPLOADED_PHOTO_MAX_SCALE } from './global-variables.js';
 import '../nouislider/nouislider.js';
 
 const photoScaleUpButton = document.querySelector('.scale__control--bigger');
@@ -79,8 +79,8 @@ noUiSlider.create(slider, {
 const onPhotoScaleUpButtonClick = () => {
   let scaleValue = getPercentFromString(photoUserScaleField.value);
   scaleValue += UPLOADED_PHOTO_SCALE_STEP;
-  if (scaleValue > 1) {
-    scaleValue = 1;
+  if (scaleValue > UPLOADED_PHOTO_MAX_SCALE) {
+    scaleValue = UPLOADED_PHOTO_MAX_SCALE;
   }
   uploadedPhotoPreview.style.transform = `scale(${scaleValue})`;
   userScaleHiddenField.value = scaleValue;
@@ -105,7 +105,7 @@ const onSliderUpdate = (_, handle, unencoded) => {
   uploadedPhotoPreview.style.filter = `${photoFilters[userFilterName].func}(${sliderValue.value}${photoFilters[userFilterName].unit})`;
 };
 //Обработчик клика по радиокнопке фильтра
-const onphotoFilterOptionChange = (evt) => {
+const onPhotoFilterOptionChange = (evt) => {
   if (evt.target.checked) {
     userFilterName = evt.target.value;
     if (userFilterName === 'none') {
@@ -151,7 +151,7 @@ const setInitialEditorParameters = () => {
   //Задаем картинке чистое состояние
   uploadedPhotoPreview.classList = 'img-upload__preview';
   //Вешаем слушатели выбора на фильтры
-  photoFilterOptions.forEach((filter) => filter.addEventListener('change', onphotoFilterOptionChange));
+  photoFilterOptions.forEach((filter) => filter.addEventListener('change', onPhotoFilterOptionChange));
 };
 //Очищаем состояние редактора фотографии (при закрытии)
 const clearEditorParameters = () => {
@@ -161,7 +161,7 @@ const clearEditorParameters = () => {
   //Удаляем все слушатели с фрейма редактора
   photoScaleUpButton.removeEventListener('click', onPhotoScaleUpButtonClick);
   photoScaleDownButton.removeEventListener('click', onPhotoScaleDownButtonClick);
-  photoFilterOptions.forEach((filter) => filter.removeEventListener('change', onphotoFilterOptionChange));
+  photoFilterOptions.forEach((filter) => filter.removeEventListener('change', onPhotoFilterOptionChange));
   //Задаем картинке чистое состояние
   uploadedPhotoPreview.classList = 'img-upload__preview';
   uploadedPhotoPreview.style.filter = 'none';
