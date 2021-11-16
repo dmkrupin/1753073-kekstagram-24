@@ -7,7 +7,7 @@ import { clearDownloadPhotoButton, showSuccessMessage, showErrorMessage } from '
 //Получаем фотографии с сервера и отрисовываем превью фотографий в разметке;
 getPhotos((photosDataset) => renderPreviewPhotos(photosDataset));
 
-//Pадаем действия по кнопке отправки фотографии из редактора
+//Задаем действия по кнопке отправки фотографии из редактора
 setFormSubmit(
   () => {
     closeModalUploadOverlay();

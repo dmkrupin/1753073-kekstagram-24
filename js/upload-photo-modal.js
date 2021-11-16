@@ -88,12 +88,8 @@ function openModalUploadOverlay () {
   //Будем закрывать форму редактирования по клику на крестик
   uploadOverlayCloseButton.addEventListener('click', onUploadOverlayCloseButtonClick);
   //Валидируем поле ввода хэштегов
-  hashtagsInput.addEventListener('input', () => {
-    onHashTagInputInput();
-  });
-  descriptionInput.addEventListener('input', () => {
-    onDescriptionInputInput();
-  });
+  hashtagsInput.addEventListener('input', onHashTagInputInput);
+  descriptionInput.addEventListener('input', onDescriptionInputInput);
   //Готовим начальное состояние редактора
   setInitialEditorParameters();
 }
