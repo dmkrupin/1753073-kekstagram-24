@@ -2,8 +2,7 @@ const getPhotos = (onSuccess) =>
   fetch(
     'https://24.javascript.pages.academy/kekstagram/data')
     .then((response) => response.json())
-    .then((photosDataset) => onSuccess(photosDataset))
-    .catch((err) => console.error(err));
+    .then((photosDataset) => onSuccess(photosDataset));
 
 const sendPhoto = (onSuccess, onError, body) => {
   fetch('https://24.javascript.pages.academy/kekstagram',
