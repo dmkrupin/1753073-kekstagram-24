@@ -2,7 +2,7 @@ import { ESCAPE_KEYCODE } from './global-variables.js';
 
 const body = document.querySelector('body');
 const isEscapeKey = (evt) => evt.keyCode === ESCAPE_KEYCODE;
-
+const downloadPhotoInput = document.querySelector('.img-upload__label');
 const isUniqueArray = (arr) => new Set(arr).size === arr.length;
 
 const numberAsStringIncrement = (str) => {
@@ -19,4 +19,13 @@ const getPercentFromString = (str) => {
 //Функция принимает на вход доли процента в формате 0 - 1 и возвращает строку формата '0%' - '100%'
 const setPercentToString = (percent) => `${percent * 100}%`;
 
-export { body, isEscapeKey, isUniqueArray, numberAsStringIncrement, getPercentFromString, setPercentToString };
+//Функция показывает сообщение с ошибкой
+const showMessage = (message) => {
+  alert(message);
+};
+
+const clearDownloadPhotoButton = () => {
+  downloadPhotoInput.classList.add('hidden');
+};
+
+export { body, isEscapeKey, isUniqueArray, numberAsStringIncrement, getPercentFromString, setPercentToString, clearDownloadPhotoButton };

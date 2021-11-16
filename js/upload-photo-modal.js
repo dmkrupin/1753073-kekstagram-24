@@ -75,7 +75,7 @@ function closeModalUploadOverlay () {
   hashtagsInput.removeEventListener('input', onHashTagInputInput);
   hashtagsInput.value = '';
   descriptionInput.removeEventListener('input', onDescriptionInputInput);
-  descriptionInput.value='';
+  descriptionInput.value = '';
   //Очищаем редактор
   clearEditorParameters();
 }
@@ -103,3 +103,4 @@ uploadPhotoInput.addEventListener('change', (evt) => {
   openModalUploadOverlay();
 });
 
+export { closeModalUploadOverlay };

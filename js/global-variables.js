@@ -1,4 +1,3 @@
-export const PHOTO_NUMBER = 25;
 export const PREVIEW_PHOTO_SIZE = 182;
 export const COMMENT_AVATAR_SIZE = 35;
 export const FULL_PHOTO_IMAGE_SIZE = 600;

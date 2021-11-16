@@ -1,6 +1,7 @@
 import { getPercentFromString, setPercentToString} from './common.js';
 import { UPLOADED_PHOTO_SCALE_STEP, UPLOADED_PHOTO_MIN_SCALE, UPLOADED_PHOTO_MAX_SCALE } from './global-variables.js';
 import '../nouislider/nouislider.js';
+import { sendPhoto } from './api.js';
 
 const photoScaleUpButton = document.querySelector('.scale__control--bigger');
 const photoScaleDownButton = document.querySelector('.scale__control--smaller');
@@ -64,6 +65,7 @@ const photoFilters = {
   },
 };
 let userFilterName = 'none';
+const uploadPhotoForm = document.querySelector('.img-upload__form');
 
 //Создаем слайдер
 noUiSlider.create(slider, {
@@ -168,4 +170,14 @@ const clearEditorParameters = () => {
   //Очищаем все обработчики со слайдера
   slider.noUiSlider.off();
 };
-export { setInitialEditorParameters, clearEditorParameters };
+
+const setFormSubmit = (onSuccess, onError) => {
+  uploadPhotoForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const formData = new FormData(evt.target);
+    sendPhoto(onSuccess, onError, formData);
+  });
+};
+
+
+export { setInitialEditorParameters, clearEditorParameters, setFormSubmit };
