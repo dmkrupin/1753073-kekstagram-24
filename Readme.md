@@ -1,4 +1,5 @@
 # Личный проект «Кекстаграм»
+[![wakatime](https://wakatime.com/badge/github/dmkrupin/1753073-kekstagram-24.svg)](https://wakatime.com/badge/github/dmkrupin/1753073-kekstagram-24)
 
 * Студент: [Дима Крупин](https://up.htmlacademy.ru/javascript/24/user/1753073).
 * Наставник: [Антон Попов](https://htmlacademy.ru/profile/joker).

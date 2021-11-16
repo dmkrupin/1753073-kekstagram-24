@@ -1,10 +1,21 @@
-import { generatePhotos } from './mocks/photo-generator.js';
 import { renderPreviewPhotos } from './preview-photo-renderer.js';
-import { PHOTO_NUMBER } from './global-variables.js';
-import './upload-photo-modal.js';
+import { closeModalUploadOverlay } from './upload-photo-modal.js';
+import { getPhotos } from './api.js';
+import { setFormSubmit } from './upload-photo-editor.js';
+import { clearDownloadPhotoButton, showSuccessMessage, showErrorMessage } from './common.js';
 
-//Генерируем массив фотографий;
-const photosDataset = generatePhotos(PHOTO_NUMBER);
+//Получаем фотографии с сервера и отрисовываем превью фотографий в разметке;
+getPhotos((photosDataset) => renderPreviewPhotos(photosDataset));
 
-//Отрисовываем превью фотографий в разметке;
-renderPreviewPhotos(photosDataset);
+//Задаем действия по кнопке отправки фотографии из редактора
+setFormSubmit(
+  () => {
+    closeModalUploadOverlay();
+    clearDownloadPhotoButton();
+    showSuccessMessage();
+  },
+  () => {
+    closeModalUploadOverlay();
+    showErrorMessage();
+  },
+);

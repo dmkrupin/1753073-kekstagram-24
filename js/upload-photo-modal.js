@@ -75,7 +75,7 @@ function closeModalUploadOverlay () {
   hashtagsInput.removeEventListener('input', onHashTagInputInput);
   hashtagsInput.value = '';
   descriptionInput.removeEventListener('input', onDescriptionInputInput);
-  descriptionInput.value='';
+  descriptionInput.value = '';
   //Очищаем редактор
   clearEditorParameters();
 }
@@ -88,12 +88,8 @@ function openModalUploadOverlay () {
   //Будем закрывать форму редактирования по клику на крестик
   uploadOverlayCloseButton.addEventListener('click', onUploadOverlayCloseButtonClick);
   //Валидируем поле ввода хэштегов
-  hashtagsInput.addEventListener('input', () => {
-    onHashTagInputInput();
-  });
-  descriptionInput.addEventListener('input', () => {
-    onDescriptionInputInput();
-  });
+  hashtagsInput.addEventListener('input', onHashTagInputInput);
+  descriptionInput.addEventListener('input', onDescriptionInputInput);
   //Готовим начальное состояние редактора
   setInitialEditorParameters();
 }
@@ -103,3 +99,4 @@ uploadPhotoInput.addEventListener('change', (evt) => {
   openModalUploadOverlay();
 });
 
+export { closeModalUploadOverlay };
