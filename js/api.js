@@ -12,7 +12,14 @@ const sendPhoto = (onSuccess, onError, body) => {
       enctype: 'multipart/form-data',
       body: body,
     })
-    .then(() => onSuccess())
+    .then((response) => {
+      if (response.ok) {
+        onSuccess();
+      }
+      else {
+        throw new Error('Ошибка загрузки файла!');
+      }
+    })
     .catch((err) => onError(err));
 };
 

@@ -4,9 +4,13 @@ const body = document.querySelector('body');
 const isEscapeKey = (evt) => evt.keyCode === ESCAPE_KEYCODE;
 const downloadPhotoInput = document.querySelector('.img-upload__label');
 const isUniqueArray = (arr) => new Set(arr).size === arr.length;
-const messageTemplateElement = document.querySelector('#success').content;
-const messageElement = messageTemplateElement.querySelector('.success');
-const clonedMessageElement = messageElement.cloneNode(true);
+const successMessageTemplateElement = document.querySelector('#success').content;
+const successMessageElement = successMessageTemplateElement.querySelector('.success');
+const clonedSuccessMessageElement = successMessageElement.cloneNode(true);
+const errorMessageTemplateElement = document.querySelector('#error').content;
+const errorMessageElement = errorMessageTemplateElement.querySelector('.error');
+const clonedErrorMessageElement = errorMessageElement.cloneNode(true);
+
 
 const numberAsStringIncrement = (str) => {
   let strAsNumber = parseInt(str, 10);
@@ -29,16 +33,34 @@ const onSuccessMessageEscKeydown = (evt) => {
     closeSuccessMessage();
   }
 };
+const onErrorMessageEscKeydown = (evt) => {
+  if (isEscapeKey) {
+    evt.preventDefault();
+    closeErrorMessage();
+  }
+};
+
 //Функция показывает сообщение об успешной отправке фото
 const showSuccessMessage = () => {
-  const messageButton = clonedMessageElement.querySelector('.success__button');
-  body.insertAdjacentElement('beforeend', clonedMessageElement);
+  const messageButton = clonedSuccessMessageElement.querySelector('.success__button');
+  body.insertAdjacentElement('beforeend', clonedSuccessMessageElement);
   messageButton.addEventListener('click', closeSuccessMessage);
   document.addEventListener('keydown', onSuccessMessageEscKeydown);
 };
 function closeSuccessMessage () {
-  clonedMessageElement.remove();
+  clonedSuccessMessageElement.remove();
   document.removeEventListener('keydown', onSuccessMessageEscKeydown);
+}
+//Функция показывает сообщение об ошибке при отправке фото
+const showErrorMessage = () => {
+  const messageButton = clonedErrorMessageElement.querySelector('.error__button');
+  body.insertAdjacentElement('beforeend', clonedErrorMessageElement);
+  messageButton.addEventListener('click', closeErrorMessage);
+  document.addEventListener('keydown', onErrorMessageEscKeydown);
+};
+function closeErrorMessage () {
+  clonedErrorMessageElement.remove();
+  document.removeEventListener('keydown', onErrorMessageEscKeydown);
 }
 
 //Функция скрывает кнопку загрузки фото на сервер
@@ -46,4 +68,4 @@ const clearDownloadPhotoButton = () => {
   downloadPhotoInput.classList.add('hidden');
 };
 
-export { body, isEscapeKey, isUniqueArray, numberAsStringIncrement, getPercentFromString, setPercentToString, clearDownloadPhotoButton, showSuccessMessage };
+export { body, isEscapeKey, isUniqueArray, numberAsStringIncrement, getPercentFromString, setPercentToString, clearDownloadPhotoButton, showSuccessMessage, showErrorMessage };

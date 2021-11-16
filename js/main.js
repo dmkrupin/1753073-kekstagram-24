@@ -2,7 +2,7 @@ import { renderPreviewPhotos } from './preview-photo-renderer.js';
 import { closeModalUploadOverlay } from './upload-photo-modal.js';
 import { getPhotos } from './api.js';
 import { setFormSubmit } from './upload-photo-editor.js';
-import { clearDownloadPhotoButton, showSuccessMessage } from './common.js';
+import { clearDownloadPhotoButton, showSuccessMessage, showErrorMessage } from './common.js';
 
 //Получаем фотографии с сервера и отрисовываем превью фотографий в разметке;
 getPhotos((photosDataset) => renderPreviewPhotos(photosDataset));
@@ -14,5 +14,8 @@ setFormSubmit(
     clearDownloadPhotoButton();
     showSuccessMessage();
   },
-  console.log,
+  () => {
+    closeModalUploadOverlay();
+    showErrorMessage();
+  },
 );
