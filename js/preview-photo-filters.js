@@ -13,10 +13,18 @@ const compareComments = (photoA, photoB) => {
   return commentsB - commentsA;
 };
 
+const clearActiveFilterButtonState = () => {
+  defaultFilterButton.classList.remove('img-filters__button--active');
+  randomFilterButton.classList.remove('img-filters__button--active');
+  discussedFilterButton.classList.remove('img-filters__button--active');
+};
+
 const setDefaultClick = (photosDataset) => {
   defaultFilterButton.addEventListener('click',
     debounce (
       () => {
+        clearActiveFilterButtonState();
+        defaultFilterButton.classList.add('img-filters__button--active');
         clearPreviewPhotos();
         renderPreviewPhotos(photosDataset);
       },
@@ -27,6 +35,8 @@ const setRandomClick = (photosDataset) => {
   randomFilterButton.addEventListener('click',
     debounce (
       () => {
+        clearActiveFilterButtonState();
+        randomFilterButton.classList.add('img-filters__button--active');
         clearPreviewPhotos();
         const randomPhotosDataset = getXRandomUniqueArrayElements(photosDataset, RANDOM_FILTER_PHOTOS_COUNT);
         renderPreviewPhotos(randomPhotosDataset);
@@ -38,6 +48,8 @@ const setDiscussedClick = (photosDataset) => {
   discussedFilterButton.addEventListener('click',
     debounce (
       () => {
+        clearActiveFilterButtonState();
+        discussedFilterButton.classList.add('img-filters__button--active');
         clearPreviewPhotos();
         const sortedPhotosDataset = photosDataset.slice();
         sortedPhotosDataset.sort(compareComments);
