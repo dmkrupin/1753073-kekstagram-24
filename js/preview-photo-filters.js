@@ -1,6 +1,7 @@
 import { renderPreviewPhotos, clearPreviewPhotos } from './preview-photo-renderer.js';
-import { RANDOM_FILTER_PHOTOS_COUNT } from './global-variables.js';
+import { RANDOM_FILTER_PHOTOS_COUNT, RERENDER_DELAY } from './global-variables.js';
 import { getXRandomUniqueArrayElements } from './common.js';
+import { debounce } from './utils/debounce.js';
 
 const defaultFilterButton = document.querySelector('#filter-default');
 const randomFilterButton = document.querySelector('#filter-random');
@@ -13,28 +14,36 @@ const compareComments = (photoA, photoB) => {
 };
 
 const setDefaultClick = (photosDataset) => {
-  defaultFilterButton.addEventListener('click', () => {
-    clearPreviewPhotos();
-    renderPreviewPhotos(photosDataset);
-  });
+  defaultFilterButton.addEventListener('click',
+    debounce (
+      () => {
+        clearPreviewPhotos();
+        renderPreviewPhotos(photosDataset);
+      },
+      RERENDER_DELAY));
 };
 
 const setRandomClick = (photosDataset) => {
-  randomFilterButton.addEventListener('click', () => {
-    clearPreviewPhotos();
-    const randomPhotosDataset = getXRandomUniqueArrayElements(photosDataset, RANDOM_FILTER_PHOTOS_COUNT);
-    renderPreviewPhotos(randomPhotosDataset);
-  });
+  randomFilterButton.addEventListener('click',
+    debounce (
+      () => {
+        clearPreviewPhotos();
+        const randomPhotosDataset = getXRandomUniqueArrayElements(photosDataset, RANDOM_FILTER_PHOTOS_COUNT);
+        renderPreviewPhotos(randomPhotosDataset);
+      },
+      RERENDER_DELAY));
 };
 
 const setDiscussedClick = (photosDataset) => {
-  discussedFilterButton.addEventListener('click', () => {
-    clearPreviewPhotos();
-    const sortedPhotosDataset = photosDataset.slice();
-    sortedPhotosDataset.sort(compareComments);
-    renderPreviewPhotos(sortedPhotosDataset);
-  });
+  discussedFilterButton.addEventListener('click',
+    debounce (
+      () => {
+        clearPreviewPhotos();
+        const sortedPhotosDataset = photosDataset.slice();
+        sortedPhotosDataset.sort(compareComments);
+        renderPreviewPhotos(sortedPhotosDataset);
+      },
+      RERENDER_DELAY));
 };
-
 
 export {setDefaultClick, setRandomClick, setDiscussedClick};
