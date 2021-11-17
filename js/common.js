@@ -11,6 +11,41 @@ const errorMessageTemplateElement = document.querySelector('#error').content;
 const errorMessageElement = errorMessageTemplateElement.querySelector('.error');
 const clonedErrorMessageElement = errorMessageElement.cloneNode(true);
 
+/** Функция возвращает случайное целое число из указанного числового диапазона включительно,
+ * @param {number} rangeStart - нижняя граница выбранного диапазона.
+ * @param {number} rangeEnd - верхняя граница выбранного диапазона.
+ * @returns {number} - Cлучайное целое число из указанного числового диапазона, включая границы.
+*/
+const getRandomIntFromRange = function (rangeStart, rangeEnd) {
+  rangeStart = Math.ceil(rangeStart);
+  rangeEnd = Math.floor(rangeEnd);
+  return Math.floor(Math.random() * (rangeEnd - rangeStart + 1) + rangeStart);
+};
+
+const getRandomArrayElement = (arr) => arr[getRandomIntFromRange(0, arr.length - 1)];
+
+const getRandomUniqueArrayElement  = (array) => {
+  const previousValues = [];
+
+  return function () {
+    let currentValue = getRandomArrayElement(array);
+    if (previousValues.length >= array.length) {
+      return null;
+    }
+    while (previousValues.includes(currentValue)) {
+      currentValue = getRandomArrayElement(array);
+    }
+    previousValues.push(currentValue);
+    return currentValue;
+  };
+};
+const getXRandomUniqueArrayElements = (array, X) => {
+  const result = [];
+  for (let i = 1; i <= X; i++) {
+    result.push(getRandomUniqueArrayElement(array)());
+  }
+  return result;
+};
 
 const numberAsStringIncrement = (str) => {
   let strAsNumber = parseInt(str, 10);
@@ -68,4 +103,4 @@ const clearDownloadPhotoButton = () => {
   downloadPhotoInput.classList.add('hidden');
 };
 
-export { body, isEscapeKey, isUniqueArray, numberAsStringIncrement, getPercentFromString, setPercentToString, clearDownloadPhotoButton, showSuccessMessage, showErrorMessage };
+export { body, isEscapeKey, isUniqueArray, numberAsStringIncrement, getPercentFromString, setPercentToString, clearDownloadPhotoButton, showSuccessMessage, showErrorMessage, getXRandomUniqueArrayElements };
