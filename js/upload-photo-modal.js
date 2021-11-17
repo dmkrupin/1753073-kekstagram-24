@@ -101,7 +101,6 @@ uploadPhotoInput.addEventListener('change', (evt) => {
   const file = uploadPhotoInput.files[0];
   const fileName = file.name.toLowerCase();
   const matches = FILE_TYPES.some((fileType) => fileName.endsWith(fileType));
-  console.log(matches);
   if (matches) {
     uploadPhotoPreview.src = URL.createObjectURL(file);
   }
