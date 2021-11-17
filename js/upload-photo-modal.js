@@ -1,5 +1,5 @@
 import { body, isEscapeKey, isUniqueArray } from './common.js';
-import { MAX_HASHTAGS_ALLOWED, MAX_DESCRIPTION_LENGTH } from './global-variables.js';
+import { MAX_HASHTAGS_ALLOWED, MAX_DESCRIPTION_LENGTH, FILE_TYPES } from './global-variables.js';
 import { setInitialEditorParameters, clearEditorParameters } from './upload-photo-editor.js';
 
 const uploadPhotoInput = document.querySelector('.img-upload__input');
@@ -7,6 +7,7 @@ const hashtagsInput = document.querySelector('.text__hashtags');
 const descriptionInput = document.querySelector('.text__description');
 const uploadOverlayFrame = document.querySelector('.img-upload__overlay');
 const uploadOverlayCloseButton = uploadOverlayFrame.querySelector('.img-upload__cancel');
+const uploadPhotoPreview = document.querySelector('.img-upload__preview').firstElementChild;
 
 //Обработчик нажатия Esc на окне редактирования загруженного фото
 const onUploadOverlayEscKeydown = (evt) => {
@@ -66,16 +67,17 @@ const onDescriptionInputInput = () => {
 function closeModalUploadOverlay () {
   uploadOverlayFrame.classList.add('hidden');
   body.classList.remove('modal-open');
+  //Очищаем поле загрузки изображения и все остальные поля
+  uploadPhotoInput.value = '';
+  hashtagsInput.value = '';
+  descriptionInput.value = '';
   //Удаляем обработчик нажатия Esc
   document.removeEventListener('keydown', onUploadOverlayEscKeydown);
   //Удаляем обработчик клика по кнопке закрытия полноразмерной фото
   uploadOverlayCloseButton.removeEventListener('click', onUploadOverlayCloseButtonClick);
-  //Очищаем поле загрузки изображения и все остальные поля
-  uploadPhotoInput.value = '';
+  //Удаляем обработчики изменения текстовых полей формы
   hashtagsInput.removeEventListener('input', onHashTagInputInput);
-  hashtagsInput.value = '';
   descriptionInput.removeEventListener('input', onDescriptionInputInput);
-  descriptionInput.value = '';
   //Очищаем редактор
   clearEditorParameters();
 }
@@ -96,6 +98,13 @@ function openModalUploadOverlay () {
 
 uploadPhotoInput.addEventListener('change', (evt) => {
   evt.preventDefault();
+  const file = uploadPhotoInput.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((fileType) => fileName.endsWith(fileType));
+  console.log(matches);
+  if (matches) {
+    uploadPhotoPreview.src = URL.createObjectURL(file);
+  }
   openModalUploadOverlay();
 });
 

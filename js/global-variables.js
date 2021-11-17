@@ -10,3 +10,5 @@ export const UPLOADED_PHOTO_MIN_SCALE = 0.25;
 export const UPLOADED_PHOTO_MAX_SCALE = 1;
 export const RANDOM_FILTER_PHOTOS_COUNT = 10;
 export const RERENDER_DELAY = 500;
+export const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
