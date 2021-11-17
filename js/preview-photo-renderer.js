@@ -45,8 +45,16 @@ const renderPreviewPhoto = function (photoDataset) {
 /**
  * Функция добавляет в разметку фотографии-превью из заданного датасета
  */
-const renderPreviewPhotos = (photosDatasetArray) => {
-  photosDatasetArray.forEach((photo) => renderPreviewPhoto(photo));
+const renderPreviewPhotos = (photosDataset) => {
+  photosDataset.forEach((photo) => renderPreviewPhoto(photo));
+};
+//Функция чистит срендеренные превью фотографий
+const clearPreviewPhotos = () => {
+  [...previewPhotoSpace.children].forEach((photo) => {
+    if (photo.matches('.picture')) {
+      photo.remove();
+    }
+  });
 };
 
-export { renderPreviewPhotos };
+export { renderPreviewPhotos, clearPreviewPhotos };
