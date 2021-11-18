@@ -12,8 +12,7 @@ const renderPreviewPhoto = function (photoDataset) {
   const previewPhotoLink = document.createElement('a');
   previewPhotoLink.classList.add('picture');
   previewPhotoLink.href = '#';
-  //Не работает?
-  previewPhotoLink.tabIndex = '0';
+  previewPhotoLink.tabIndex = 0;
   //Создаем элемент самого изображения
   const previewPhotoImage = document.createElement('img');
   previewPhotoImage.classList.add('picture__img');
