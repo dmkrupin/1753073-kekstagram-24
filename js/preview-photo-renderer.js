@@ -1,7 +1,7 @@
 import { previewPhotoClickHandler } from './full-photo-modal.js';
 import { PREVIEW_PHOTO_SIZE } from './global-variables.js';
 
-export const previewPhotoSpace = document.querySelector('.pictures');
+export const previewPhotoContainerElement = document.querySelector('.pictures');
 
 /**
  * Функция создает в разметке фотографию-превью из входящего датасета фотографии
@@ -36,7 +36,7 @@ const renderPreviewPhoto = (photoDataset) => {
   previewPhotoLikesCounter.textContent = photoDataset.likes;
   previewPhotoInfo.appendChild(previewPhotoLikesCounter);
   //Добавляем полученную фотографию на страницу
-  previewPhotoSpace.appendChild(previewPhotoLink);
+  previewPhotoContainerElement.appendChild(previewPhotoLink);
   //По клику на фотографию открываем ее полноразмерную версию
   previewPhotoClickHandler(previewPhotoLink, photoDataset);
 };
@@ -49,7 +49,7 @@ const renderPreviewPhotos = (photosDataset) => {
 };
 //Функция чистит срендеренные превью фотографий
 const clearPreviewPhotos = () => {
-  [...previewPhotoSpace.children].forEach((photo) => {
+  [...previewPhotoContainerElement.children].forEach((photo) => {
     if (photo.matches('.picture')) {
       photo.remove();
     }

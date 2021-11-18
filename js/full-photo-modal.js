@@ -2,23 +2,23 @@ import { COMMENT_AVATAR_SIZE } from './global-variables.js';
 import { FULL_PHOTO_IMAGE_SIZE, COMMENTS_PORTION_PER_LOAD } from './global-variables.js';
 import { body, isEscapeKey, numberAsStringIncrement } from './common.js';
 
-const fullPhotoFrame = document.querySelector('.big-picture');
-const fullPhotoCloseButton = fullPhotoFrame.querySelector('.big-picture__cancel');
-const fullPhotoImageContainer = fullPhotoFrame.querySelector('.big-picture__img');
-const fullPhotoImage = fullPhotoImageContainer.querySelector('img');
-const fullPhotoDescription = fullPhotoFrame.querySelector('.social__caption');
-const fullPhotoLikesCount = fullPhotoFrame.querySelector('.likes-count');
-const fullPhotoComments = fullPhotoFrame.querySelector('.social__comments');
-const fullPhotoExistingComments = fullPhotoComments.children;
-const fullPhotoDisplayedCommentsCount = fullPhotoFrame.querySelector('.displayed-comments-count');
-const fullPhotoCommentsTotal = fullPhotoFrame.querySelector('.comments-count');
-let fullPhotoCommentsLoader = fullPhotoFrame.querySelector('.comments-loader');
+const fullPhotoFrameElement = document.querySelector('.big-picture');
+const fullPhotoCloseButtonElement = fullPhotoFrameElement.querySelector('.big-picture__cancel');
+const fullPhotoImageContainerElement = fullPhotoFrameElement.querySelector('.big-picture__img');
+const fullPhotoImageElement = fullPhotoImageContainerElement.querySelector('img');
+const fullPhotoDescriptionElement = fullPhotoFrameElement.querySelector('.social__caption');
+const fullPhotoLikesCount = fullPhotoFrameElement.querySelector('.likes-count');
+const fullPhotoCommentsElement = fullPhotoFrameElement.querySelector('.social__comments');
+const fullPhotoExistingComments = fullPhotoCommentsElement.children;
+const fullPhotoDisplayedCommentsCountElement = fullPhotoFrameElement.querySelector('.displayed-comments-count');
+const fullPhotoCommentsTotalElement = fullPhotoFrameElement.querySelector('.comments-count');
+let fullPhotoCommentsLoaderElement = fullPhotoFrameElement.querySelector('.comments-loader');
 let commentsPortionsLoaded = 0;
 
 //Функция удаляет все срендеренные комментарии к полноразмерной фотографии и обнуляет счетчик
 const clearComments = () => {
   [...fullPhotoExistingComments].forEach((comment) => comment.remove());
-  fullPhotoDisplayedCommentsCount.textContent = '0';
+  fullPhotoDisplayedCommentsCountElement.textContent = '0';
 };
 //Рендерим комментарий к полноразмерной фотографии из датасета
 const renderComment = (comment) => {
@@ -39,9 +39,9 @@ const renderComment = (comment) => {
   commentElementText.textContent = comment.message;
   commentElement.appendChild(commentElementText);
   //Добавляем полученный комментарий к остальным
-  fullPhotoComments.appendChild(commentElement);
+  fullPhotoCommentsElement.appendChild(commentElement);
   //Увеличиваем счетчик отображаемых комментариев на 1
-  fullPhotoDisplayedCommentsCount.textContent = numberAsStringIncrement(fullPhotoDisplayedCommentsCount.textContent);
+  fullPhotoDisplayedCommentsCountElement.textContent = numberAsStringIncrement(fullPhotoDisplayedCommentsCountElement.textContent);
 };
 /** Генерируем порцию комментариев из соответствующего массива к полноразмерной фотографии
  * Выбираем индексы порций по 5 комментариев из массива последовательно:
@@ -55,8 +55,8 @@ const renderCommentsPortion = (commentsArray) => {
   const commentsPortion = commentsArray.slice(COMMENTS_PORTION_PER_LOAD * commentsPortionsLoaded, COMMENTS_PORTION_PER_LOAD * (1 + commentsPortionsLoaded));
   commentsPortion.forEach((comment) => renderComment(comment));
   commentsPortionsLoaded++;
-  if (parseInt(fullPhotoDisplayedCommentsCount.textContent, 10) === commentsArray.length) {
-    fullPhotoCommentsLoader.classList.add('hidden');
+  if (parseInt(fullPhotoDisplayedCommentsCountElement.textContent, 10) === commentsArray.length) {
+    fullPhotoCommentsLoaderElement.classList.add('hidden');
   }
 };
 //Обработчик нажатия Esc на окне полноразмерной фото
@@ -77,45 +77,45 @@ const onFullPhotoCommentsLoaderClick = function (comments) {
 };
 //Показываем фрейм с полноразмерной фото
 function openModalFullPhoto ({comments}) {
-  fullPhotoFrame.classList.remove('hidden');
+  fullPhotoFrameElement.classList.remove('hidden');
   body.classList.add('modal-open');
   //Будем закрывать полноразмерную фотографию по нажатию Esc
   document.addEventListener('keydown', onFullPhotoEscKeydown);
   //Будем закрывать полноразмерную фотографию по клику на крестик
-  fullPhotoCloseButton.addEventListener('click', onFullPhotoCloseButtonClick);
+  fullPhotoCloseButtonElement.addEventListener('click', onFullPhotoCloseButtonClick);
   //Показываем кнопку "загрузить еще комментарии", если она была спрятана
   // если комментов изначально всего 5, то кнопка не пропадает вот поэтому!
-  if (fullPhotoCommentsLoader.classList.contains('hidden')) {
-    fullPhotoCommentsLoader.classList.remove('hidden');
+  if (fullPhotoCommentsLoaderElement.classList.contains('hidden')) {
+    fullPhotoCommentsLoaderElement.classList.remove('hidden');
   }
   //Будем слушать клик по кнопке "загрузить еще комментарии" Я НЕ ПОНИМАЮ, КАК РАБОТАЮТ ЗАМЫКАНИЯ
-  fullPhotoCommentsLoader.addEventListener('click', () => {onFullPhotoCommentsLoaderClick(comments);});
+  fullPhotoCommentsLoaderElement.addEventListener('click', () => {onFullPhotoCommentsLoaderClick(comments);});
 }
 //Скрываем фрейм с полноразмерной фото
 function closeModalFullPhoto () {
-  fullPhotoFrame.classList.add('hidden');
+  fullPhotoFrameElement.classList.add('hidden');
   body.classList.remove('modal-open');
   //Удаляем обработчик нажатия Esc
   document.removeEventListener('keydown', onFullPhotoEscKeydown);
   //Удаляем обработчик клика по кнопке закрытия полноразмерной фото
-  fullPhotoCloseButton.removeEventListener('click', onFullPhotoCloseButtonClick);
+  fullPhotoCloseButtonElement.removeEventListener('click', onFullPhotoCloseButtonClick);
   //Удаляем кнопку "загрузить еще комментарии" со всеми обработчиками и создаем заново
-  const swap = fullPhotoCommentsLoader.cloneNode(true);
-  fullPhotoCommentsLoader.remove();
-  fullPhotoCommentsLoader = swap;
-  fullPhotoComments.insertAdjacentElement('afterend', fullPhotoCommentsLoader);
+  const swap = fullPhotoCommentsLoaderElement.cloneNode(true);
+  fullPhotoCommentsLoaderElement.remove();
+  fullPhotoCommentsLoaderElement = swap;
+  fullPhotoCommentsElement.insertAdjacentElement('afterend', fullPhotoCommentsLoaderElement);
   //Обнуляем счетчик счетчик загруженных порций
   commentsPortionsLoaded = 0;
 }
 //Рендерим полноразмерную фотографию
 const buildFullPhoto = ({url, description, likes, comments}) => {
-  fullPhotoImage.src = url;
-  fullPhotoImage.alt = description;
-  fullPhotoImage.width = FULL_PHOTO_IMAGE_SIZE;
-  fullPhotoImage.height = FULL_PHOTO_IMAGE_SIZE;
-  fullPhotoDescription.textContent = description;
+  fullPhotoImageElement.src = url;
+  fullPhotoImageElement.alt = description;
+  fullPhotoImageElement.width = FULL_PHOTO_IMAGE_SIZE;
+  fullPhotoImageElement.height = FULL_PHOTO_IMAGE_SIZE;
+  fullPhotoDescriptionElement.textContent = description;
   fullPhotoLikesCount.textContent = likes;
-  fullPhotoCommentsTotal.textContent = comments.length;
+  fullPhotoCommentsTotalElement.textContent = comments.length;
   clearComments();
   renderCommentsPortion(comments);
 };

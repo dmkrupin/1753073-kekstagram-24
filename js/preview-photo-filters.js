@@ -3,9 +3,9 @@ import { RANDOM_FILTER_PHOTOS_COUNT, RERENDER_DELAY } from './global-variables.j
 import { getXRandomUniqueArrayElements } from './common.js';
 import { debounce } from './utils/debounce.js';
 
-const defaultFilterButton = document.querySelector('#filter-default');
-const randomFilterButton = document.querySelector('#filter-random');
-const discussedFilterButton = document.querySelector('#filter-discussed');
+const defaultFilterButtonElement = document.querySelector('#filter-default');
+const randomFilterButtonElement = document.querySelector('#filter-random');
+const discussedFilterButtonElement = document.querySelector('#filter-discussed');
 
 const compareComments = (photoA, photoB) => {
   const commentsA = photoA.comments.length;
@@ -14,17 +14,17 @@ const compareComments = (photoA, photoB) => {
 };
 
 const clearActiveFilterButtonState = () => {
-  defaultFilterButton.classList.remove('img-filters__button--active');
-  randomFilterButton.classList.remove('img-filters__button--active');
-  discussedFilterButton.classList.remove('img-filters__button--active');
+  defaultFilterButtonElement.classList.remove('img-filters__button--active');
+  randomFilterButtonElement.classList.remove('img-filters__button--active');
+  discussedFilterButtonElement.classList.remove('img-filters__button--active');
 };
 
 const setDefaultClick = (photosDataset) => {
-  defaultFilterButton.addEventListener('click',
+  defaultFilterButtonElement.addEventListener('click',
     debounce (
       () => {
         clearActiveFilterButtonState();
-        defaultFilterButton.classList.add('img-filters__button--active');
+        defaultFilterButtonElement.classList.add('img-filters__button--active');
         clearPreviewPhotos();
         renderPreviewPhotos(photosDataset);
       },
@@ -32,11 +32,11 @@ const setDefaultClick = (photosDataset) => {
 };
 
 const setRandomClick = (photosDataset) => {
-  randomFilterButton.addEventListener('click',
+  randomFilterButtonElement.addEventListener('click',
     debounce (
       () => {
         clearActiveFilterButtonState();
-        randomFilterButton.classList.add('img-filters__button--active');
+        randomFilterButtonElement.classList.add('img-filters__button--active');
         clearPreviewPhotos();
         const randomPhotosDataset = getXRandomUniqueArrayElements(photosDataset, RANDOM_FILTER_PHOTOS_COUNT);
         renderPreviewPhotos(randomPhotosDataset);
@@ -45,11 +45,11 @@ const setRandomClick = (photosDataset) => {
 };
 
 const setDiscussedClick = (photosDataset) => {
-  discussedFilterButton.addEventListener('click',
+  discussedFilterButtonElement.addEventListener('click',
     debounce (
       () => {
         clearActiveFilterButtonState();
-        discussedFilterButton.classList.add('img-filters__button--active');
+        discussedFilterButtonElement.classList.add('img-filters__button--active');
         clearPreviewPhotos();
         const sortedPhotosDataset = photosDataset.slice();
         sortedPhotosDataset.sort(compareComments);
