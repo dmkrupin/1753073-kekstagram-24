@@ -7,7 +7,7 @@ export const previewPhotoSpace = document.querySelector('.pictures');
  * Функция создает в разметке фотографию-превью из входящего датасета фотографии
  * @param {object} photoDataset - объект фотографии, по значениям ключей которого создаем теги в разметке
  */
-const renderPreviewPhoto = function (photoDataset) {
+const renderPreviewPhoto = (photoDataset) => {
   //Создаем родительский элемент для превью фотографии - ссылку
   const previewPhotoLink = document.createElement('a');
   previewPhotoLink.classList.add('picture');

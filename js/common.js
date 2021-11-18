@@ -82,6 +82,7 @@ const showSuccessMessage = () => {
   messageButton.addEventListener('click', closeSuccessMessage);
   document.addEventListener('keydown', onSuccessMessageEscKeydown);
 };
+//Функция закрывает сообщение об успешной отправке фото
 function closeSuccessMessage () {
   clonedSuccessMessageElement.remove();
   document.removeEventListener('keydown', onSuccessMessageEscKeydown);
@@ -93,6 +94,7 @@ const showErrorMessage = () => {
   messageButton.addEventListener('click', closeErrorMessage);
   document.addEventListener('keydown', onErrorMessageEscKeydown);
 };
+//Функция закрывает сообщение об ошибке при отправке фото
 function closeErrorMessage () {
   clonedErrorMessageElement.remove();
   document.removeEventListener('keydown', onErrorMessageEscKeydown);
