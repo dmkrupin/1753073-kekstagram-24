@@ -1,4 +1,4 @@
-import { previewPhotoClickHandler } from './full-photo-modal.js';
+import { setPreviewPhotoClick } from './full-photo-modal.js';
 import { PREVIEW_PHOTO_SIZE } from './global-variables.js';
 
 export const previewPhotoContainerElement = document.querySelector('.pictures');
@@ -38,7 +38,7 @@ const renderPreviewPhoto = (photoDataset) => {
   //Добавляем полученную фотографию на страницу
   previewPhotoContainerElement.appendChild(previewPhotoLink);
   //По клику на фотографию открываем ее полноразмерную версию
-  previewPhotoClickHandler(previewPhotoLink, photoDataset);
+  setPreviewPhotoClick(previewPhotoLink, photoDataset);
 };
 
 /**

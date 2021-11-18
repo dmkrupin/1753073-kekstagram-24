@@ -120,7 +120,7 @@ const buildFullPhoto = ({url, description, likes, comments}) => {
   renderCommentsPortion(comments);
 };
 
-const previewPhotoClickHandler = (previewPhotoEvement, photoDataset) => {
+const setPreviewPhotoClick = (previewPhotoEvement, photoDataset) => {
   previewPhotoEvement.addEventListener('click', (evt) => {
     evt.preventDefault();
     buildFullPhoto(photoDataset);
@@ -128,4 +128,4 @@ const previewPhotoClickHandler = (previewPhotoEvement, photoDataset) => {
   });
 };
 
-export { previewPhotoClickHandler };
+export { setPreviewPhotoClick };
