@@ -1,4 +1,4 @@
-import { body, isEscapeKey, isUniqueArray } from './common.js';
+import { bodyElement, isEscapeKey, isUniqueArray } from './common.js';
 import { MAX_HASHTAGS_ALLOWED, MAX_DESCRIPTION_LENGTH, FILE_TYPES } from './global-variables.js';
 import { setInitialEditorParameters, clearEditorParameters } from './upload-photo-editor.js';
 
@@ -66,7 +66,7 @@ const onDescriptionInputInput = () => {
 //Скрываем фрейм с формой редактирования загруженного фото
 function closeModalUploadOverlay () {
   uploadOverlayFrameElement.classList.add('hidden');
-  body.classList.remove('modal-open');
+  bodyElement.classList.remove('modal-open');
   //Очищаем поле загрузки изображения и все остальные поля
   uploadPhotoInputElement.value = '';
   hashtagsInputElement.value = '';
@@ -84,7 +84,7 @@ function closeModalUploadOverlay () {
 //Показываем фрейм с формой редактирования загруженного фото
 function openModalUploadOverlay () {
   uploadOverlayFrameElement.classList.remove('hidden');
-  body.classList.add('modal-open');
+  bodyElement.classList.add('modal-open');
   //Будем закрывать форму редактирования по нажатию Esc
   document.addEventListener('keydown', onUploadOverlayEscKeydown);
   //Будем закрывать форму редактирования по клику на крестик

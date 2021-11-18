@@ -1,6 +1,6 @@
 import { COMMENT_AVATAR_SIZE } from './global-variables.js';
 import { FULL_PHOTO_IMAGE_SIZE, COMMENTS_PORTION_PER_LOAD } from './global-variables.js';
-import { body, isEscapeKey, numberAsStringIncrement } from './common.js';
+import { bodyElement, isEscapeKey, numberAsStringIncrement } from './common.js';
 
 const fullPhotoFrameElement = document.querySelector('.big-picture');
 const fullPhotoCloseButtonElement = fullPhotoFrameElement.querySelector('.big-picture__cancel');
@@ -78,23 +78,23 @@ const onFullPhotoCommentsLoaderClick = function (comments) {
 //Показываем фрейм с полноразмерной фото
 function openModalFullPhoto ({comments}) {
   fullPhotoFrameElement.classList.remove('hidden');
-  body.classList.add('modal-open');
+  bodyElement.classList.add('modal-open');
   //Будем закрывать полноразмерную фотографию по нажатию Esc
   document.addEventListener('keydown', onFullPhotoEscKeydown);
   //Будем закрывать полноразмерную фотографию по клику на крестик
   fullPhotoCloseButtonElement.addEventListener('click', onFullPhotoCloseButtonClick);
   //Показываем кнопку "загрузить еще комментарии", если она была спрятана
   // если комментов изначально всего 5, то кнопка не пропадает вот поэтому!
-  if (fullPhotoCommentsLoaderElement.classList.contains('hidden')) {
+  if (fullPhotoCommentsLoaderElement.classList.contains('hidden') && comments.length > 5) {
     fullPhotoCommentsLoaderElement.classList.remove('hidden');
   }
-  //Будем слушать клик по кнопке "загрузить еще комментарии" Я НЕ ПОНИМАЮ, КАК РАБОТАЮТ ЗАМЫКАНИЯ
+  //Будем слушать клик по кнопке "загрузить еще комментарии"
   fullPhotoCommentsLoaderElement.addEventListener('click', () => {onFullPhotoCommentsLoaderClick(comments);});
 }
 //Скрываем фрейм с полноразмерной фото
 function closeModalFullPhoto () {
   fullPhotoFrameElement.classList.add('hidden');
-  body.classList.remove('modal-open');
+  bodyElement.classList.remove('modal-open');
   //Удаляем обработчик нажатия Esc
   document.removeEventListener('keydown', onFullPhotoEscKeydown);
   //Удаляем обработчик клика по кнопке закрытия полноразмерной фото
