@@ -4,12 +4,10 @@ const bodyElement = document.querySelector('body');
 const isEscapeKey = (evt) => evt.keyCode === ESCAPE_KEYCODE;
 const downloadPhotoInputElement = document.querySelector('.img-upload__label');
 const isUniqueArray = (arr) => new Set(arr).size === arr.length;
-const successMessageTemplateElement = document.querySelector('#success').content;
-const successMessageElement = successMessageTemplateElement.querySelector('.success');
-const clonedSuccessMessageElement = successMessageElement.cloneNode(true);
-const errorMessageTemplateElement = document.querySelector('#error').content;
-const errorMessageElement = errorMessageTemplateElement.querySelector('.error');
-const clonedErrorMessageElement = errorMessageElement.cloneNode(true);
+const successMessageTemplate = document.querySelector('#success').content.cloneNode(true);
+const successMessageElement = document.createElement('div');
+const errorMessageTemplate = document.querySelector('#error').content.cloneNode(true);
+const errorMessageElement = document.createElement('div');
 
 /** Функция возвращает случайное целое число из указанного числового диапазона включительно,
  * @param {number} rangeStart - нижняя граница выбранного диапазона.
@@ -77,26 +75,28 @@ const onErrorMessageEscKeydown = (evt) => {
 
 //Функция показывает сообщение об успешной отправке фото
 const showSuccessMessage = () => {
-  const messageButton = clonedSuccessMessageElement.querySelector('.success__button');
-  bodyElement.insertAdjacentElement('beforeend', clonedSuccessMessageElement);
+  successMessageElement.appendChild(successMessageTemplate);
+  const messageButton = successMessageElement.querySelector('.success__button');
+  bodyElement.insertAdjacentElement('beforeend', successMessageElement);
   messageButton.addEventListener('click', closeSuccessMessage);
   document.addEventListener('keydown', onSuccessMessageEscKeydown);
 };
 //Функция закрывает сообщение об успешной отправке фото
 function closeSuccessMessage () {
-  clonedSuccessMessageElement.remove();
+  successMessageElement.remove();
   document.removeEventListener('keydown', onSuccessMessageEscKeydown);
 }
 //Функция показывает сообщение об ошибке при отправке фото
 const showErrorMessage = () => {
-  const messageButton = clonedErrorMessageElement.querySelector('.error__button');
-  bodyElement.insertAdjacentElement('beforeend', clonedErrorMessageElement);
+  errorMessageElement.appendChild(errorMessageTemplate);
+  const messageButton = errorMessageElement.querySelector('.error__button');
+  bodyElement.insertAdjacentElement('beforeend', errorMessageElement);
   messageButton.addEventListener('click', closeErrorMessage);
   document.addEventListener('keydown', onErrorMessageEscKeydown);
 };
 //Функция закрывает сообщение об ошибке при отправке фото
 function closeErrorMessage () {
-  clonedErrorMessageElement.remove();
+  errorMessageElement.remove();
   document.removeEventListener('keydown', onErrorMessageEscKeydown);
 }
 
