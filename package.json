@@ -11,15 +11,20 @@
     "url": "https://github.com/htmlacademy-javascript/1753073-kekstagram-24/issues"
   },
   "devDependencies": {
-    "browser-sync": "2.26.14",
+    "browser-sync": "^2.27.7",
+    "del": "^6.0.0",
     "eslint": "7.18.0",
-    "eslint-config-htmlacademy": "4.1.0"
+    "eslint-config-htmlacademy": "4.1.0",
+    "gulp": "^4.0.2",
+    "gulp-less": "^5.0.0",
+    "gulp-rename": "^2.0.0"
   },
   "license": "MIT",
   "dependencies": {},
   "scripts": {
-    "start": "browser-sync start --server --no-ui --files \"js/**/*.js\"",
-    "test": "eslint js/"
+    "start": "gulp",
+    "test": "eslint js/",
+    "build": "gulp build"
   },
   "engines": {
     "node": "14.x",

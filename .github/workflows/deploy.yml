@@ -1,0 +1,28 @@
+name: deploy
+on:
+  push:
+    branches:
+      - 'master'
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Scan the repository
+        uses: actions/checkout@v2
+
+      - name: Start node on a runner
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: get build folder
+        run: npm run build
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@4.1.6
+        with:
+          branch: gh-pages
+          folder: build
